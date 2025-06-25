@@ -29,6 +29,7 @@ export async function POST(request) {
     console.log(output);
     return Response.json({ summary: output.summery, cool_facts: output.cool_facts });
   } catch (error) {
+    console.error(error);
     return Response.json({ valid: false, message: 'Server error.' }, { status: 500 });
   }
 } 
