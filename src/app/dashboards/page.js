@@ -3,8 +3,12 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Sidebar from './Sidebar';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 export default function Dashboard() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
   const [apiKeys, setApiKeys] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingKey, setEditingKey] = useState(null);
@@ -15,6 +19,25 @@ export default function Dashboard() {
     description: '',
     permissions: []
   });
+
+  useEffect(() => {
+    if (status === 'unauthenticated') {
+      router.replace('/');
+    }
+  }, [status, router]);
+
+  if (status === 'loading') {
+    return (
+      <div className="flex min-h-screen bg-gray-50 items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Checking authentication...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!session) return null;
 
   // Fetch API keys on component mount
   useEffect(() => {
@@ -221,6 +244,18 @@ export default function Dashboard() {
                 </Link>
                 <h1 className="text-2xl font-bold text-gray-900">API Key Management</h1>
               </div>
+              {session && (
+                <div className="flex items-center gap-3">
+                  {session.user.image && (
+                    <img
+                      src={session.user.image}
+                      alt={session.user.name}
+                      className="w-8 h-8 rounded-full border"
+                    />
+                  )}
+                  <span className="font-medium text-gray-900">{session.user.name}</span>
+                </div>
+              )}
               <button
                 onClick={handleCreate}
                 className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2"

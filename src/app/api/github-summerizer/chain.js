@@ -1,71 +1,69 @@
 import { ChatOpenAI } from "@langchain/openai";
 import { ChatPromptTemplate } from "@langchain/core/prompts";
 import { RunnableSequence } from "@langchain/core/runnables";
-import { BaseOutputParser } from "@langchain/core/output_parsers";
-
-// Custom output parser to structure the output
-class SummarizeOutputParser extends BaseOutputParser {
-  static lc_name() {
-    return "SummarizeOutputParser";
-  }
-  lc_namespace = ["custom", "summarize_output_parser"];
-  async parse(text) {
-    // Expecting output in the format:
-    // Summary: ...
-    // Cool Facts:
-    // - fact 1
-    // - fact 2
-    // ...
-    const summaryMatch = text.match(/Summary:(.*?)(Cool Facts:|$)/is);
-    const coolFactsMatch = text.match(/Cool Facts:(.*)/is);
-
-    const summary = summaryMatch ? summaryMatch[1].trim() : "";
-    let cool_facts = [];
-    if (coolFactsMatch) {
-      cool_facts = coolFactsMatch[1]
-        .split("\n")
-        .map(line => line.replace(/^- /, "").trim())
-        .filter(line => line.length > 0);
-    }
-    return {
-      summery: summary,
-      cool_facts
-    };
-  }
-  getFormatInstructions() {
-    return "Output should have a 'Summary:' section and a 'Cool Facts:' section with bullet points.";
-  }
-}
+import { z } from "zod";
 
 // The prompt template
 const summarizePrompt = ChatPromptTemplate.fromTemplate(
   `You are an expert open source project summarizer.
 Given the following README file content, please do the following:
 1. Write a concise summary of what this repository is about.
-2. List 3-5 cool or unique facts about this repository, if possible.
+2. List 3-5 cool or unique facts about this repository, if possible. If you can't find any, use general facts about open source projects.
 
-Format your response as:
-Summary: <your summary here>
-Cool Facts:
-- <fact 1>
-- <fact 2>
-- <fact 3>
+Do not return an empty string for cool_facts. Always return an array of at least 3 items, even if you have to use general facts about open source projects.
+
+Format your response as a JSON object with the following schema:
+{{
+  "summary": string, // concise summary
+  "cool_facts": string[] // array of cool facts, must have at least 3 items
+}}
+
+Example:
+{{
+  "summary": "This is a library for building web applications with React.",
+  "cool_facts": [
+    "Supports server-side rendering.",
+    "Has a plugin system.",
+    "Used by many Fortune 500 companies."
+  ]
+}}
 
 README content:
 {readmeContent}
 `
 );
 
-// The chain function
+// The chain function using withStructuredOutput
 export async function summarizeGithubReadme(readmeContent) {
   const model = new ChatOpenAI({ temperature: 0.2 });
-  const outputParser = new SummarizeOutputParser();
+  const structuredModel = model.withStructuredOutput(
+    z.object({
+      summary: z.string(),
+      cool_facts: z.array(z.string())
+    })
+  );
 
   const chain = RunnableSequence.from([
     summarizePrompt,
-    model,
-    outputParser
+    structuredModel
   ]);
+  
+  let result = await chain.invoke({ readmeContent });
 
-  return await chain.invoke({ readmeContent });
-} 
+  console.log(result);
+  // Post-process: If cool_facts is a string, split it into an array
+  if (typeof result.cool_facts === 'string') {
+    result.cool_facts = result.cool_facts
+      .split('\n')
+      .map(fact => fact.replace(/^- /, '').trim())
+      .filter(fact => fact.length > 0);
+  }
+  // If it's an empty string or not an array, set a fallback
+  if (!Array.isArray(result.cool_facts) || result.cool_facts.length === 0) {
+    result.cool_facts = [
+      "No unique facts could be extracted from the README."
+    ];
+  }
+
+  return result;
+}
