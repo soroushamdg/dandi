@@ -44,6 +44,7 @@ export default function LandingPage() {
               <Link href="/dashboards">
                 <Button
                   size="sm"
+                  variant="default"
                   className="ml-2 bg-gradient-to-r from-yellow-400 via-orange-400 to-pink-500 text-white font-semibold shadow-md hover:from-yellow-500 hover:to-pink-600 transition-colors border-0"
                 >
                   Dashboard
@@ -52,6 +53,7 @@ export default function LandingPage() {
               <Link href="/playground">
                 <Button
                   size="sm"
+                  variant="secondary"
                   className="ml-2 bg-gradient-to-r from-green-400 via-blue-400 to-purple-500 text-white font-semibold shadow-md hover:from-green-500 hover:to-purple-600 transition-colors border-0"
                 >
                   Playground
