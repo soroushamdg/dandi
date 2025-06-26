@@ -157,50 +157,50 @@ export default function LandingPage() {
               </div>
             </div>
             <div className="mx-auto grid max-w-5xl items-start gap-6 py-12 lg:grid-cols-3 lg:gap-12">
-              <Card>
-                <CardHeader>
+              <Card className="">
+                <CardHeader className="">
                   <BarChart3 className="h-10 w-10 text-primary" />
-                  <CardTitle>Smart Summaries</CardTitle>
-                  <CardDescription>
+                  <CardTitle className="">Smart Summaries</CardTitle>
+                  <CardDescription className="">
                     Get AI-generated summaries of repository purpose, architecture, and key features
                   </CardDescription>
                 </CardHeader>
               </Card>
-              <Card>
-                <CardHeader>
+              <Card className="">
+                <CardHeader className="">
                   <Star className="h-10 w-10 text-primary" />
-                  <CardTitle>Trending Metrics</CardTitle>
-                  <CardDescription>Track stars, forks, contributors, and growth patterns over time</CardDescription>
+                  <CardTitle className="">Trending Metrics</CardTitle>
+                  <CardDescription className="">Track stars, forks, contributors, and growth patterns over time</CardDescription>
                 </CardHeader>
               </Card>
-              <Card>
-                <CardHeader>
+              <Card className="">
+                <CardHeader className="">
                   <Zap className="h-10 w-10 text-primary" />
-                  <CardTitle>Cool Facts</CardTitle>
-                  <CardDescription>
+                  <CardTitle className="">Cool Facts</CardTitle>
+                  <CardDescription className="">
                     Discover interesting statistics and unique aspects of the repository
                   </CardDescription>
                 </CardHeader>
               </Card>
-              <Card>
-                <CardHeader>
+              <Card className="">
+                <CardHeader className="">
                   <GitPullRequest className="h-10 w-10 text-primary" />
-                  <CardTitle>Important PRs</CardTitle>
-                  <CardDescription>Identify the most significant pull requests and recent changes</CardDescription>
+                  <CardTitle className="">Important PRs</CardTitle>
+                  <CardDescription className="">Identify the most significant pull requests and recent changes</CardDescription>
                 </CardHeader>
               </Card>
-              <Card>
-                <CardHeader>
+              <Card className="">
+                <CardHeader className="">
                   <TrendingUp className="h-10 w-10 text-primary" />
-                  <CardTitle>Version Updates</CardTitle>
-                  <CardDescription>Stay informed about latest releases and version history</CardDescription>
+                  <CardTitle className="">Version Updates</CardTitle>
+                  <CardDescription className="">Stay informed about latest releases and version history</CardDescription>
                 </CardHeader>
               </Card>
-              <Card>
-                <CardHeader>
+              <Card className="">
+                <CardHeader className="">
                   <Users className="h-10 w-10 text-primary" />
-                  <CardTitle>Community Insights</CardTitle>
-                  <CardDescription>
+                  <CardTitle className="">Community Insights</CardTitle>
+                  <CardDescription className="">
                     Analyze contributor activity, community health, and collaboration patterns
                   </CardDescription>
                 </CardHeader>
@@ -223,9 +223,9 @@ export default function LandingPage() {
             <div className="mx-auto grid max-w-5xl items-start gap-6 py-12 lg:grid-cols-3 lg:gap-8">
               {/* Free Tier */}
               <Card className="relative">
-                <CardHeader>
+                <CardHeader className="">
                   <CardTitle className="text-2xl">Free</CardTitle>
-                  <CardDescription>Perfect for getting started</CardDescription>
+                  <CardDescription className="">Perfect for getting started</CardDescription>
                   <div className="text-4xl font-bold">$0</div>
                   <div className="text-sm text-muted-foreground">Forever free</div>
                 </CardHeader>
@@ -248,7 +248,7 @@ export default function LandingPage() {
                       <span className="text-sm">Community support</span>
                     </li>
                   </ul>
-                  <Button className="w-full" variant="outline">
+                  <Button className="w-full" variant="outline" size="sm">
                     Get Started Free
                   </Button>
                 </CardContent>
@@ -256,10 +256,10 @@ export default function LandingPage() {
 
               {/* Pro Tier */}
               <Card className="relative border-primary">
-                <Badge className="absolute -top-2 left-1/2 -translate-x-1/2">Most Popular</Badge>
-                <CardHeader>
+                <Badge variant="secondary" className="absolute -top-2 left-1/2 -translate-x-1/2">Most Popular</Badge>
+                <CardHeader className="">
                   <CardTitle className="text-2xl">Pro</CardTitle>
-                  <CardDescription>For serious developers and teams</CardDescription>
+                  <CardDescription className="">For serious developers and teams</CardDescription>
                   <div className="text-4xl font-bold">$19</div>
                   <div className="text-sm text-muted-foreground">per month</div>
                 </CardHeader>
@@ -294,9 +294,9 @@ export default function LandingPage() {
 
               {/* Enterprise Tier */}
               <Card className="relative">
-                <CardHeader>
+                <CardHeader className="">
                   <CardTitle className="text-2xl">Enterprise</CardTitle>
-                  <CardDescription>For large organizations</CardDescription>
+                  <CardDescription className="">For large organizations</CardDescription>
                   <div className="text-4xl font-bold">Custom</div>
                   <div className="text-sm text-muted-foreground">Contact us</div>
                 </CardHeader>
