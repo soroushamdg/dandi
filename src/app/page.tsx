@@ -123,7 +123,7 @@ export default function LandingPage() {
                 </p>
               </div>
               <div className="space-x-4">
-                <Button size="lg" className="h-12 px-8">
+                <Button size="lg" variant="default" className="h-12 px-8">
                   Start Analyzing Free
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
@@ -286,7 +286,9 @@ export default function LandingPage() {
                       <span className="text-sm">Priority support</span>
                     </li>
                   </ul>
-                  <Button className="w-full">Start Pro Trial</Button>
+                  <Button className="w-full" variant="default" size="sm">
+                    Start Pro Trial
+                  </Button>
                 </CardContent>
               </Card>
 
@@ -321,7 +323,7 @@ export default function LandingPage() {
                       <span className="text-sm">Enterprise security</span>
                     </li>
                   </ul>
-                  <Button className="w-full" variant="outline">
+                  <Button className="w-full" variant="outline" size="sm">
                     Contact Sales
                   </Button>
                 </CardContent>
@@ -343,7 +345,7 @@ export default function LandingPage() {
                 </p>
               </div>
               <div className="w-full max-w-sm space-y-2">
-                <Button size="lg" className="w-full h-12">
+                <Button size="lg" variant="default" className="w-full h-12">
                   Start Your Free Analysis
                   <Github className="ml-2 h-4 w-4" />
                 </Button>
